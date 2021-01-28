@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 class StartFragment : Fragment() {
 
     var hightlightsadapter = HighlightsAdapter()
+    var categoriesadapter = CategoriesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +26,13 @@ class StartFragment : Fragment() {
 
         var highlightsrv = view.findViewById<RecyclerView>(R.id.startHighlightsRV)
 
-        highlightsrv.layoutManager = LinearLayoutManager(this)
+        highlightsrv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         highlightsrv.adapter = hightlightsadapter
+
+        var categoriesrv = view.findViewById<RecyclerView>(R.id.startCategoriesRV)
+
+        categoriesrv.layoutManager = LinearLayoutManager(context)
+        categoriesrv.adapter = categoriesadapter
+
     }
 }
