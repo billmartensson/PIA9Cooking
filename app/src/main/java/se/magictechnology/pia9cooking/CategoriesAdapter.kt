@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CategoriesAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
 
+    lateinit var startfrag : StartFragment
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val vh = CategoryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.category_item, parent, false))
         return vh
@@ -18,6 +20,9 @@ class CategoriesAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
 
+        holder.itemView.setOnClickListener {
+            startfrag.goCategory(position)
+        }
     }
 
 }
