@@ -8,11 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 
 class StartFragment : Fragment() {
 
+    private lateinit var database: DatabaseReference
+
     var hightlightsadapter = HighlightsAdapter()
     var categoriesadapter = CategoriesAdapter()
+
+    var categoriesList : List<CookCategory>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +35,8 @@ class StartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        database = Firebase.database.reference
 
         hightlightsadapter.startfrag = this
         categoriesadapter.startfrag = this
@@ -38,6 +51,7 @@ class StartFragment : Fragment() {
         categoriesrv.layoutManager = LinearLayoutManager(context)
         categoriesrv.adapter = categoriesadapter
 
+        loadCategories()
     }
 
     fun goRecipe(recipenumber : Int)
@@ -51,4 +65,38 @@ class StartFragment : Fragment() {
     {
         activity!!.supportFragmentManager.beginTransaction().add(R.id.mainFragmentLayout, CategoryFragment()).addToBackStack(null).commit()
     }
+
+
+    fun loadCategories()
+    {
+        val categoriesRef = database.child("pia9cooking").child("categories")
+
+        val categoriesListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get Post object and use the values to update the UI
+                //val post = dataSnapshot.getValue<Post>()
+                // ...
+
+                var tempCategoryList = mutableListOf<CookCategory>()
+                for(categorySnapshot in dataSnapshot.children)
+                {
+                    Log.d("pia9debug", categorySnapshot.key!!)
+                    var tempCategory = categorySnapshot.getValue<CookCategory>()!!
+                    tempCategoryList.add(tempCategory)
+                }
+
+                categoriesList = tempCategoryList
+                categoriesadapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("pia9debug", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        categoriesRef.addListenerForSingleValueEvent(categoriesListener)
+    }
+
 }
+
+data class CookCategory(val title : String? = null)

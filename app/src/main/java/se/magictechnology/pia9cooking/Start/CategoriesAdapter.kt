@@ -3,6 +3,7 @@ package se.magictechnology.pia9cooking
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class CategoriesAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
@@ -15,10 +16,17 @@ class CategoriesAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return 5
+        startfrag.categoriesList?.let {
+            return it.size
+        }
+        return 0
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+
+        val currentCategory = startfrag.categoriesList!![position]
+
+        holder.categorytextview.text = currentCategory.title
 
         holder.itemView.setOnClickListener {
             startfrag.goCategory(position)
@@ -29,6 +37,6 @@ class CategoriesAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
 
 class CategoryViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
-
+    var categorytextview = view.findViewById<TextView>(R.id.categoryTextview)
 
 }

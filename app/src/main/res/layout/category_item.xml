@@ -6,7 +6,7 @@
     android:layout_height="50dp">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/categoryTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CATEGORY"
