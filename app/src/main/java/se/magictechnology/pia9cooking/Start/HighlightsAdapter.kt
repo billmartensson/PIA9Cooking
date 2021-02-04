@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class HighlightsAdapter() : RecyclerView.Adapter<HighlightViewHolder>() {
@@ -16,10 +17,20 @@ class HighlightsAdapter() : RecyclerView.Adapter<HighlightViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return 5
+
+        startfrag.highlightRecipes?.let {
+            return it.size
+        }
+
+        return 0
     }
 
     override fun onBindViewHolder(holder: HighlightViewHolder, position: Int) {
+
+        val currentRecipies = startfrag.highlightRecipes!![position]
+
+        holder.highlighttextview.text = currentRecipies.title
+
         holder.itemView.setOnClickListener {
             Log.d("PIA9DEBUG", "KLICKAT PÅ ITEM")
 
@@ -32,6 +43,6 @@ class HighlightsAdapter() : RecyclerView.Adapter<HighlightViewHolder>() {
 
 class HighlightViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
-
+    var highlighttextview = view.findViewById<TextView>(R.id.highlightTextview)
 
 }

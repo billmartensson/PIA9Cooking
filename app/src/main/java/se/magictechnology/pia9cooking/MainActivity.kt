@@ -3,12 +3,19 @@ package se.magictechnology.pia9cooking
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        auth = Firebase.auth
 
         supportFragmentManager.beginTransaction().add(R.id.mainFragmentLayout, StartFragment()).commit()
 
@@ -18,17 +25,19 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.tabProfileTV).setOnClickListener {
 
-            var isLoggedIn = true
-
-            if(isLoggedIn)
-            {
-                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentLayout, ProfileFragment()).commit()
-            } else {
-                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentLayout, LoginFragment()).commit()
-            }
+            updateProfileTab()
 
         }
 
+    }
 
+    fun updateProfileTab()
+    {
+        if(auth.currentUser != null)
+        {
+            supportFragmentManager.beginTransaction().replace(R.id.mainFragmentLayout, ProfileFragment()).commit()
+        } else {
+            supportFragmentManager.beginTransaction().replace(R.id.mainFragmentLayout, LoginFragment()).commit()
+        }
     }
 }

@@ -24,6 +24,7 @@ class StartFragment : Fragment() {
     var categoriesadapter = CategoriesAdapter()
 
     var categoriesList : List<CookCategory>? = null
+    var highlightRecipes : List<CookRecipe>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +53,7 @@ class StartFragment : Fragment() {
         categoriesrv.adapter = categoriesadapter
 
         loadCategories()
+        loadHighlights()
     }
 
     fun goRecipe(recipenumber : Int)
@@ -97,6 +99,38 @@ class StartFragment : Fragment() {
         categoriesRef.addListenerForSingleValueEvent(categoriesListener)
     }
 
+    fun loadHighlights()
+    {
+        val recipesRef = database.child("pia9cooking").child("recepies")
+
+        val recipiesListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get Post object and use the values to update the UI
+                //val post = dataSnapshot.getValue<Post>()
+                // ...
+
+                var tempRecepieList = mutableListOf<CookRecipe>()
+                for(recipieSnapshot in dataSnapshot.children)
+                {
+                    Log.d("pia9debug", recipieSnapshot.key!!)
+                    var tempRecepie = recipieSnapshot.getValue<CookRecipe>()!!
+                    tempRecepieList.add(tempRecepie)
+                }
+
+                highlightRecipes = tempRecepieList
+                hightlightsadapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("pia9debug", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        recipesRef.addListenerForSingleValueEvent(recipiesListener)
+    }
+
 }
 
 data class CookCategory(val title : String? = null)
+
+data class CookRecipe(val title : String? = null)
