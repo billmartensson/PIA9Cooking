@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
@@ -15,16 +16,14 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import se.magictechnology.pia9cooking.Start.StartViewmodel
 
 class StartFragment : Fragment() {
 
-    private lateinit var database: DatabaseReference
+    lateinit var startvm : StartViewmodel
 
     var hightlightsadapter = HighlightsAdapter()
     var categoriesadapter = CategoriesAdapter()
-
-    var categoriesList : List<CookCategory>? = null
-    var highlightRecipes : List<CookRecipe>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +36,8 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        database = Firebase.database.reference
+        startvm = ViewModelProvider(this).get(StartViewmodel::class.java)
+
 
         hightlightsadapter.startfrag = this
         categoriesadapter.startfrag = this
@@ -52,8 +52,11 @@ class StartFragment : Fragment() {
         categoriesrv.layoutManager = LinearLayoutManager(context)
         categoriesrv.adapter = categoriesadapter
 
-        loadCategories()
-        loadHighlights()
+        startvm.loadCategories()
+        startvm.loadHighlights()
+
+        
+
     }
 
     fun goRecipe(recipenumber : Int)
@@ -68,69 +71,7 @@ class StartFragment : Fragment() {
         activity!!.supportFragmentManager.beginTransaction().add(R.id.mainFragmentLayout, CategoryFragment()).addToBackStack(null).commit()
     }
 
-
-    fun loadCategories()
-    {
-        val categoriesRef = database.child("pia9cooking").child("categories")
-
-        val categoriesListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values to update the UI
-                //val post = dataSnapshot.getValue<Post>()
-                // ...
-
-                var tempCategoryList = mutableListOf<CookCategory>()
-                for(categorySnapshot in dataSnapshot.children)
-                {
-                    Log.d("pia9debug", categorySnapshot.key!!)
-                    var tempCategory = categorySnapshot.getValue<CookCategory>()!!
-                    tempCategoryList.add(tempCategory)
-                }
-
-                categoriesList = tempCategoryList
-                categoriesadapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.w("pia9debug", "loadPost:onCancelled", databaseError.toException())
-            }
-        }
-        categoriesRef.addListenerForSingleValueEvent(categoriesListener)
-    }
-
-    fun loadHighlights()
-    {
-        val recipesRef = database.child("pia9cooking").child("recepies")
-
-        val recipiesListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values to update the UI
-                //val post = dataSnapshot.getValue<Post>()
-                // ...
-
-                var tempRecepieList = mutableListOf<CookRecipe>()
-                for(recipieSnapshot in dataSnapshot.children)
-                {
-                    Log.d("pia9debug", recipieSnapshot.key!!)
-                    var tempRecepie = recipieSnapshot.getValue<CookRecipe>()!!
-                    tempRecepieList.add(tempRecepie)
-                }
-
-                highlightRecipes = tempRecepieList
-                hightlightsadapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.w("pia9debug", "loadPost:onCancelled", databaseError.toException())
-            }
-        }
-        recipesRef.addListenerForSingleValueEvent(recipiesListener)
-    }
-
 }
 
-data class CookCategory(val title : String? = null)
 
-data class CookRecipe(val title : String? = null)
+
