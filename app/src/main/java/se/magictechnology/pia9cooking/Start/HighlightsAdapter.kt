@@ -18,7 +18,7 @@ class HighlightsAdapter() : RecyclerView.Adapter<HighlightViewHolder>() {
 
     override fun getItemCount(): Int {
 
-        startfrag.highlightRecipes?.let {
+        startfrag.startvm.getHighlights().value?.let {
             return it.size
         }
 
@@ -27,14 +27,14 @@ class HighlightsAdapter() : RecyclerView.Adapter<HighlightViewHolder>() {
 
     override fun onBindViewHolder(holder: HighlightViewHolder, position: Int) {
 
-        val currentRecipies = startfrag.highlightRecipes!![position]
+        val currentRecipie = startfrag.startvm.getHighlights().value!![position]
 
-        holder.highlighttextview.text = currentRecipies.title
+        holder.highlighttextview.text = currentRecipie.title
 
         holder.itemView.setOnClickListener {
             Log.d("PIA9DEBUG", "KLICKAT PÅ ITEM")
 
-            startfrag.goRecipe(position)
+            startfrag.goRecipe(currentRecipie)
 
         }
     }

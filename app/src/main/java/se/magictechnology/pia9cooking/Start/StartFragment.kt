@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import se.magictechnology.pia9cooking.Models.CookRecipe
 import se.magictechnology.pia9cooking.Start.StartViewmodel
 
 class StartFragment : Fragment() {
@@ -38,7 +39,6 @@ class StartFragment : Fragment() {
 
         startvm = ViewModelProvider(this).get(StartViewmodel::class.java)
 
-
         hightlightsadapter.startfrag = this
         categoriesadapter.startfrag = this
 
@@ -55,15 +55,24 @@ class StartFragment : Fragment() {
         startvm.loadCategories()
         startvm.loadHighlights()
 
-        
+        startvm.getCategories().observe(this, {
+            categoriesadapter.notifyDataSetChanged()
+        })
+
+        startvm.getHighlights().observe(this, {
+            hightlightsadapter.notifyDataSetChanged()
+        })
 
     }
 
-    fun goRecipe(recipenumber : Int)
+    fun goRecipe(recipe : CookRecipe)
     {
-        Log.d("PIA9DEBUG", "GO RECIPE " + recipenumber.toString())
+        Log.d("PIA9DEBUG", "GO RECIPE " + recipe.title)
 
-        activity!!.supportFragmentManager.beginTransaction().add(R.id.mainFragmentLayout, RecipeDetailFragment()).addToBackStack(null).commit()
+        var recipedetailfrag = RecipeDetailFragment()
+        recipedetailfrag.currentrecipe = recipe
+
+        activity!!.supportFragmentManager.beginTransaction().add(R.id.mainFragmentLayout, recipedetailfrag).addToBackStack(null).commit()
     }
 
     fun goCategory(categorynumber : Int)

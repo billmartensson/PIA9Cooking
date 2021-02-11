@@ -16,7 +16,7 @@ class CategoriesAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        startfrag.categoriesList?.let {
+        startfrag.startvm.getCategories().value?.let {
             return it.size
         }
         return 0
@@ -24,7 +24,7 @@ class CategoriesAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
 
-        val currentCategory = startfrag.categoriesList!![position]
+        val currentCategory = startfrag.startvm.getCategories().value!![position]
 
         holder.categorytextview.text = currentCategory.title
 
