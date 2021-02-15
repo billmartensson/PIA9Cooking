@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import se.magictechnology.pia9cooking.Addrecipe.AddrecipeFragment
 
 
 class ProfileFragment : Fragment() {
@@ -28,6 +29,11 @@ class ProfileFragment : Fragment() {
 
             (activity as MainActivity).updateProfileTab()
 
+        }
+
+        view.findViewById<Button>(R.id.profileAddrecipeBtn).setOnClickListener {
+
+            activity!!.supportFragmentManager.beginTransaction().add(R.id.mainFragmentLayout, AddrecipeFragment()).addToBackStack(null).commit()
         }
     }
 
