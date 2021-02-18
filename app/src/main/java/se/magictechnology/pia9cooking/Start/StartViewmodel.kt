@@ -48,6 +48,7 @@ class StartViewmodel : ViewModel() {
                 {
                     Log.d("pia9debug", categorySnapshot.key!!)
                     var tempCategory = categorySnapshot.getValue<CookCategory>()!!
+                    tempCategory.fbid = categorySnapshot.key
                     tempCategoryList.add(tempCategory)
                 }
 
@@ -66,7 +67,7 @@ class StartViewmodel : ViewModel() {
 
     fun loadHighlights()
     {
-        val recipesRef = database.child("pia9cooking").child("recepies")
+        val recipesRef = database.child("pia9cooking").child("recepies").orderByChild("highlight").equalTo(true)
 
         val recipiesListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {

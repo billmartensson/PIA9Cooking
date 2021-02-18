@@ -34,9 +34,9 @@ class CategoryAdapter() : RecyclerView.Adapter<RecipeViewHolder>() {
         holder.categoryRecipeTextview.text = currentRecipie.title
 
         holder.itemView.setOnClickListener {
-            Log.d("PIA9DEBUG", "KLICKAT PÅ ITEM")
+            Log.d("PIA9DEBUG", "KLICKAT PÅ ITEM I CATEGORY")
 
-            //startfrag.goRecipe(currentRecipie)
+            categoryFrag.goRecipe(currentRecipie)
 
         }
     }

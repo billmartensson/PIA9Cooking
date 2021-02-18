@@ -1,6 +1,7 @@
 package se.magictechnology.pia9cooking
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import se.magictechnology.pia9cooking.Category.CategoryAdapter
 import se.magictechnology.pia9cooking.Category.CategoryViewmodel
 import se.magictechnology.pia9cooking.Models.CookCategory
+import se.magictechnology.pia9cooking.Models.CookRecipe
 
 class CategoryFragment : Fragment() {
 
@@ -33,6 +35,7 @@ class CategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         categoryvm = ViewModelProvider(this).get(CategoryViewmodel::class.java)
+        categoryvm.currentCategory = currentCategory
 
         categoryadapter.categoryFrag = this
 
@@ -49,5 +52,15 @@ class CategoryFragment : Fragment() {
             categoryadapter.notifyDataSetChanged()
         })
 
+    }
+
+    fun goRecipe(recipe : CookRecipe)
+    {
+        Log.d("PIA9DEBUG", "GO RECIPE " + recipe.title)
+
+        var recipedetailfrag = RecipeDetailFragment()
+        recipedetailfrag.currentrecipe = recipe
+
+        activity!!.supportFragmentManager.beginTransaction().add(R.id.mainFragmentLayout, recipedetailfrag).addToBackStack(null).commit()
     }
 }

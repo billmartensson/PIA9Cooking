@@ -11,9 +11,12 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import se.magictechnology.pia9cooking.Models.CookCategory
 import se.magictechnology.pia9cooking.Models.CookRecipe
 
 class CategoryViewmodel : ViewModel() {
+
+    lateinit var currentCategory : CookCategory
 
     private var database: DatabaseReference = Firebase.database.reference
 
@@ -28,7 +31,8 @@ class CategoryViewmodel : ViewModel() {
 
     fun loadRecepies()
     {
-        val recipesRef = database.child("pia9cooking").child("recepies")
+
+        val recipesRef = database.child("pia9cooking").child("recepies").orderByChild("category").equalTo(currentCategory.fbid)
 
         val recipiesListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {

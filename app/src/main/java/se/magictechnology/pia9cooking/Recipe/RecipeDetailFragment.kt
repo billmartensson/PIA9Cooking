@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import se.magictechnology.pia9cooking.Models.CookRecipe
@@ -44,6 +45,7 @@ class RecipeDetailFragment : Fragment() {
         } else {
             val imageRef = Firebase.storage.reference.child("pia9cooking").child(currentrecipe.recipeimage!!)
 
+            /*
             imageRef.getBytes(1024*1024).addOnSuccessListener {
                 // DET GICK BRA
                 val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
@@ -53,6 +55,12 @@ class RecipeDetailFragment : Fragment() {
             }.addOnFailureListener {
                 // DET BLEV FEL
             }
+             */
+
+            imageRef.downloadUrl.addOnSuccessListener {
+                Glide.with(this).load(it).into(recipeImageview)
+            }
+
         }
 
 
