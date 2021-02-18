@@ -1,11 +1,15 @@
 package se.magictechnology.pia9cooking
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import se.magictechnology.pia9cooking.Models.CookRecipe
 
 
@@ -31,6 +35,26 @@ class RecipeDetailFragment : Fragment() {
         val descriptiontextview = view.findViewById<TextView>(R.id.recipeDescriptionTextview)
 
         descriptiontextview.text = currentrecipe.recipedescription
+
+        val recipeImageview = view.findViewById<ImageView>(R.id.recipeImageView)
+
+        if(currentrecipe.recipeimage == null)
+        {
+            recipeImageview.visibility = View.GONE
+        } else {
+            val imageRef = Firebase.storage.reference.child("pia9cooking").child(currentrecipe.recipeimage!!)
+
+            imageRef.getBytes(1024*1024).addOnSuccessListener {
+                // DET GICK BRA
+                val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+
+                recipeImageview.setImageBitmap(bitmap)
+
+            }.addOnFailureListener {
+                // DET BLEV FEL
+            }
+        }
+
 
     }
 }

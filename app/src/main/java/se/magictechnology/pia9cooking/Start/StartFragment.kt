@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import se.magictechnology.pia9cooking.Models.CookCategory
 import se.magictechnology.pia9cooking.Models.CookRecipe
 import se.magictechnology.pia9cooking.Start.StartViewmodel
 
@@ -75,9 +76,13 @@ class StartFragment : Fragment() {
         activity!!.supportFragmentManager.beginTransaction().add(R.id.mainFragmentLayout, recipedetailfrag).addToBackStack(null).commit()
     }
 
-    fun goCategory(categorynumber : Int)
+    fun goCategory(category : CookCategory)
     {
-        activity!!.supportFragmentManager.beginTransaction().add(R.id.mainFragmentLayout, CategoryFragment()).addToBackStack(null).commit()
+
+        var categoryFrag = CategoryFragment()
+        categoryFrag.currentCategory = category
+
+        activity!!.supportFragmentManager.beginTransaction().add(R.id.mainFragmentLayout, categoryFrag).addToBackStack(null).commit()
     }
 
 }

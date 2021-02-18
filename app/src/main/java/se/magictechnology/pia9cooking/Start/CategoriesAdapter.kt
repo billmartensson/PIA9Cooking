@@ -29,7 +29,7 @@ class CategoriesAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
         holder.categorytextview.text = currentCategory.title
 
         holder.itemView.setOnClickListener {
-            startfrag.goCategory(position)
+            startfrag.goCategory(currentCategory)
         }
     }
 

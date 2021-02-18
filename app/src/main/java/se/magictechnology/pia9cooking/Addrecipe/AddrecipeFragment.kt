@@ -130,6 +130,7 @@ class AddrecipeFragment : Fragment() {
 
     fun saveToDatabase()
     {
+
         val recTitle = view!!.findViewById<EditText>(R.id.addrecipeTitleET).text.toString()
         val recDescription = view!!.findViewById<EditText>(R.id.addrecipeDescriptionET).text.toString()
 
