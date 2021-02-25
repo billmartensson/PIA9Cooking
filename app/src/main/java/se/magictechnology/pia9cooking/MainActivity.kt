@@ -52,6 +52,6 @@ class MainActivity : AppCompatActivity() {
     fun doFancyStuff()
     {
         var number = 7
-        number = 99
+        number = 123
     }
 }
