@@ -48,4 +48,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.mainFragmentLayout, LoginFragment()).commit()
         }
     }
+
+    fun doFancyStuff()
+    {
+        var number = 7
+    }
 }
