@@ -7,7 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-// Skriva kod
+// Skriva kod. Ändrat via github
 
 // TODO: Fixa saken
 
