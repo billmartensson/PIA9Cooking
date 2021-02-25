@@ -11,6 +11,8 @@ import com.google.firebase.ktx.Firebase
 
 // TODO: Fixa saken
 
+// Mera från github
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
