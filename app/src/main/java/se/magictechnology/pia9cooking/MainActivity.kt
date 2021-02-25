@@ -7,6 +7,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+// Skriva kod
+
+// TODO: Fixa saken
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
