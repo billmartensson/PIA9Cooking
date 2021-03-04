@@ -16,20 +16,20 @@
 
         <TextView
             android:id="@+id/tabRecipeTV"
+            style="@style/fancytab"
             android:layout_width="100dp"
             android:layout_height="0dp"
-            android:background="#E43F3F"
-            android:text="Recept"
+            android:text="@string/recipetab"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tabProfileTV"
+            style="@style/fancytab"
             android:layout_width="100dp"
             android:layout_height="0dp"
-            android:background="#D52C2C"
-            android:text="Min sida"
+            android:text="@string/profiletab"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

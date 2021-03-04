@@ -31,7 +31,7 @@ class CategoryAdapter() : RecyclerView.Adapter<RecipeViewHolder>() {
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val currentRecipie = categoryFrag.categoryvm.getRecepies().value!![position]
 
-        holder.categoryRecipeTextview.text = currentRecipie.title
+        holder.categoryRecipeTextview.text = currentRecipie.title + " " + currentRecipie.getShortDescription()
 
         holder.itemView.setOnClickListener {
             Log.d("PIA9DEBUG", "KLICKAT PÅ ITEM I CATEGORY")
