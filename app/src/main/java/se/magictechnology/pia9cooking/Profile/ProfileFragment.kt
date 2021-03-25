@@ -6,12 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import se.magictechnology.pia9cooking.Addrecipe.AddrecipeFragment
 
 
 class ProfileFragment : Fragment() {
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +27,8 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        AnalyticsHelper().trackScreen("Profile")
 
         view.findViewById<Button>(R.id.profileLogoutBtn).setOnClickListener {
             Firebase.auth.signOut()

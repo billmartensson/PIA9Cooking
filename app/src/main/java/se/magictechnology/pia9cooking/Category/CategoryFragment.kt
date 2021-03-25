@@ -34,6 +34,8 @@ class CategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        AnalyticsHelper().trackCategory(currentCategory.title!!)
+
         categoryvm = ViewModelProvider(this).get(CategoryViewmodel::class.java)
         categoryvm.currentCategory = currentCategory
 

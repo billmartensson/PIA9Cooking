@@ -38,6 +38,8 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        AnalyticsHelper().trackScreen("Start")
+
         startvm = ViewModelProvider(this).get(StartViewmodel::class.java)
 
         hightlightsadapter.startfrag = this

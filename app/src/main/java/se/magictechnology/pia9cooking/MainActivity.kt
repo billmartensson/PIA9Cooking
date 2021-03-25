@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.widget.TextView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 // Skriva kod. Ändrat i android studio
-
-// TODO: Fixa saken
 
 // Mera från github
 
@@ -29,6 +28,11 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAnalytics = Firebase.analytics
 
+        /*
+        firebaseAnalytics.logEvent("") {
+            param("","")
+        }
+        */
 
         auth = Firebase.auth
 
@@ -62,4 +66,9 @@ class MainActivity : AppCompatActivity() {
         var number = 7
         number = 99
     }
+
+
+
+
+
 }

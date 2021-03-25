@@ -29,6 +29,8 @@ class RecipeDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        AnalyticsHelper().trackRecipe(currentrecipe.title!!)
+
         val headertextview = view.findViewById<TextView>(R.id.recipeHeaderTextview)
 
         headertextview.text = currentrecipe.title
