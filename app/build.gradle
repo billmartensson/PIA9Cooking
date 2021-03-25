@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 30
@@ -51,6 +52,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
 
